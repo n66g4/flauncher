@@ -20,15 +20,18 @@ import 'package:flauncher/gradients.dart';
 import 'package:flauncher/providers/wallpaper_service.dart';
 import 'package:flauncher/widgets/ensure_visible.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class GradientPanelPage extends StatelessWidget {
   static const String routeName = "gradient_panel";
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return Column(
         children: [
-          Text("Gradient", style: Theme.of(context).textTheme.titleLarge),
+          Text(localizations.gradient, style: Theme.of(context).textTheme.titleLarge),
           const Divider(),
           Expanded(
             child: GridView.count(
@@ -43,6 +46,7 @@ class GradientPanelPage extends StatelessWidget {
           ),
         ],
       );
+  }
 
   Widget _gradientCard(FLauncherGradient fLauncherGradient) => Focus(
         key: Key("gradient-${fLauncherGradient.uuid}"),

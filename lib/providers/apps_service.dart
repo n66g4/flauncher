@@ -122,7 +122,7 @@ class AppsService extends ChangeNotifier
 
     return _database.transaction(() async {
       if (tvApplications.isNotEmpty) {
-        int categoryId = await addCategory("TV Applications",
+        int categoryId = await addCategory("电视应用",
             type: CategoryType.grid, shouldNotifyListeners: false
         );
 
@@ -132,7 +132,7 @@ class AppsService extends ChangeNotifier
         }
       }
       if (nonTvApplications.isNotEmpty) {
-        int categoryId = await addCategory("Non-TV Applications",
+        int categoryId = await addCategory("非电视应用",
           shouldNotifyListeners: false,
         );
         Category nonTvAppsCategory = _categoriesById[categoryId]!;
