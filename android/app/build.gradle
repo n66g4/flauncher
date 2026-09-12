@@ -57,10 +57,13 @@ android {
     signingConfigs {
         debug {}
         release {
-            storeFile file("upload-keystore.jks")
-            storePassword "${secretProperties['signing_keystore_password']}"
-            keyAlias "${secretProperties['signing_key_alias']}"
-            keyPassword "${secretProperties['signing_key_password']}"
+            def keystoreFile = file("upload-keystore.jks")
+            if (keystoreFile.exists()) {
+                storeFile keystoreFile
+                storePassword "${secretProperties['signing_keystore_password']}"
+                keyAlias "${secretProperties['signing_key_alias']}"
+                keyPassword "${secretProperties['signing_key_password']}"
+            }
         }
     }
 
