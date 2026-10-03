@@ -1,0 +1,1 @@
+-keep class me.efesser.flauncher.data.local.entity.** { *; }

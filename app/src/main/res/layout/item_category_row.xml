@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/category_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.leanback.widget.HorizontalGridView
+        android:id="@+id/apps_row"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:clipToPadding="false"
+        android:paddingEnd="48dp" />
+
+</LinearLayout>

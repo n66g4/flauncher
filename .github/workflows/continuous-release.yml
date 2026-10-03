@@ -1,11 +1,6 @@
 name: Build APK
 
 on:
-  push:
-    branches:
-      - android-4.4.2
-    paths-ignore:
-      - '**/*.md'
   workflow_dispatch:
     inputs:
       branch:
