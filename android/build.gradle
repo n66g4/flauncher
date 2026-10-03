@@ -31,14 +31,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-subprojects { subproject ->
-    subproject.afterEvaluate {
-        if (subproject.name == "sqlite3_flutter_libs" && subproject.hasProperty("android")) {
-            subproject.android.defaultConfig.minSdk = 19
-        }
-    }
-}
-
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
