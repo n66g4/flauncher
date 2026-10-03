@@ -85,8 +85,10 @@ public class MainActivity extends FlutterActivity
             }
         });
 
-        new EventChannel(messenger, APPS_EVENT_CHANNEL).setStreamHandler(
-                new LauncherAppsEventStreamHandler(this));
+        EventChannel.StreamHandler appsStreamHandler = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                ? new LauncherAppsEventStreamHandler(this)
+                : new PackageEventStreamHandler(this);
+        new EventChannel(messenger, APPS_EVENT_CHANNEL).setStreamHandler(appsStreamHandler);
 
         new EventChannel(messenger, NETWORK_EVENT_CHANNEL).setStreamHandler(
                 new NetworkEventStreamHandler(this));
@@ -297,8 +299,10 @@ public class MainActivity extends FlutterActivity
 
     private boolean launchApp(String packageName) {
         PackageManager packageManager = getPackageManager();
-        Intent intent = packageManager.getLeanbackLaunchIntentForPackage(packageName);
-
+        Intent intent = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent = packageManager.getLeanbackLaunchIntentForPackage(packageName);
+        }
         if (intent == null) {
             intent = packageManager.getLaunchIntentForPackage(packageName);
         }
