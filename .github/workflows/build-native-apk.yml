@@ -47,6 +47,9 @@ jobs:
         run: |
           UNIVERSAL="$OUTPUT_DIR/app-universal-release.apk"
           if [ ! -f "$UNIVERSAL" ]; then
+            UNIVERSAL="$OUTPUT_DIR/app-universal-release-unsigned.apk"
+          fi
+          if [ ! -f "$UNIVERSAL" ]; then
             UNIVERSAL="$OUTPUT_DIR/app-release.apk"
           fi
           if unzip -l "$UNIVERSAL" 'lib/*/*.so' 2>/dev/null | rg -q '\.so$'; then
@@ -61,15 +64,17 @@ jobs:
           VERSION_NAME: ${{ steps.version.outputs.version_name }}
         run: |
           shopt -s nullglob
-          apks=("$OUTPUT_DIR"/app-*-release.apk)
+          apks=("$OUTPUT_DIR"/app-*-release*.apk)
           if [ ${#apks[@]} -eq 0 ]; then
             echo "No APK found in $OUTPUT_DIR"
             find app/build/outputs -name '*.apk' -print
             exit 1
           fi
           for apk in "${apks[@]}"; do
-            abi="${apk#"$OUTPUT_DIR"/app-}"
-            abi="${abi%-release.apk}"
+            base="$(basename "$apk" .apk)"
+            base="${base%-unsigned}"
+            abi="${base#app-}"
+            abi="${abi%-release}"
             cp "$apk" "$OUTPUT_DIR/flauncher-native-${abi}-${VERSION_NAME}-release.apk"
           done
           ls -lh "$OUTPUT_DIR"/flauncher-native-*-release.apk
