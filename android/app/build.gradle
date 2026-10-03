@@ -53,6 +53,17 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_none"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
     }
 
     signingConfigs {
